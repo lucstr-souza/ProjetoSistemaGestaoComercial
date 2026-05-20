@@ -41,3 +41,21 @@ O projeto segue arquitetura em camadas:
 - **Banco de Dados** — MySQL
 
 **Design Patterns utilizados:** Repository, DTO, Singleton (Spring IoC)
+
+## Estrutura do Projeto
+```
+backend/
+├── src/main/java/br/com/sgc/
+│   ├── config/          # JWT, Security
+│   ├── controller/      # Endpoints REST
+│   ├── service/         # Regras de negócio
+│   ├── domain/
+│   │   ├── model/       # Entidades JPA
+│   │   ├── repository/  # Interfaces de acesso ao banco
+│   │   └── enums/       # PerfilUsuario
+│   ├── dto/             # Data Transfer Objects
+│   └── exception/       # Exceções personalizadas
+├── src/main/resources/
+│   └── application.yml
+└── pom.xml
+```
