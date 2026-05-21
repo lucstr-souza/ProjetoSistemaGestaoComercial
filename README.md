@@ -93,7 +93,12 @@ USE sgc_db;
 INSERT INTO us_usuarios (us_username, us_senha, us_perfil)
 VALUES ('admin', '$2a$12$2YCBiKf4R8MB0UHqKrz8AuDgj4F8qSjFMXv9yFHGp6aA4WlAFD9lO', 'ADMIN');
 ```
-Senha: `admin123`
+
+### 5. Acessar a documentação da API
+Após subir a aplicação, acesse o Swagger no navegador:
+```
+http://localhost:8080/swagger-ui.html
+```
 
 ## Autenticação
 
