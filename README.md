@@ -28,6 +28,7 @@ de usuários por perfil (ADMIN e FUNCIONARIO) e geração de relatórios gerenci
 - Spring Security + JWT
 - MySQL 8
 - Maven
+- Lombok
 - Swagger/OpenAPI (documentação da API)
 
 ## Arquitetura
@@ -59,3 +60,70 @@ backend/
 │   └── application.yml
 └── pom.xml
 ```
+## Como executar
+
+### Pré-requisitos
+- Java 21+
+- MySQL 8 rodando localmente
+- Maven
+
+### 1. Criar o banco de dados
+```sql
+CREATE DATABASE IF NOT EXISTS sgc_db;
+```
+
+### 2. Configurar credenciais
+Edite o arquivo `src/main/resources/application.yaml`:
+```yaml
+spring:
+  datasource:
+    username: root
+    password: SUA_SENHA
+```
+
+### 3. Rodar a aplicação
+```bash
+./mvnw spring-boot:run
+```
+A aplicação sobe na porta `8080`. As tabelas são criadas automaticamente pelo Hibernate.
+
+### 4. Inserir usuário admin inicial
+```sql
+USE sgc_db;
+INSERT INTO us_usuarios (us_username, us_senha, us_perfil)
+VALUES ('admin', '$2a$12$2YCBiKf4R8MB0UHqKrz8AuDgj4F8qSjFMXv9yFHGp6aA4WlAFD9lO', 'ADMIN');
+```
+Senha: `admin123`
+
+## Autenticação
+
+Todas as rotas exceto `/auth/login` exigem token JWT no header:
+
+## Endpoints
+
+| Método | Endpoint | Acesso | Descrição |
+|--------|----------|--------|-----------|
+| POST | `/auth/login` | Público | Gera token JWT |
+| GET | `/clientes` | Autenticado | Lista clientes |
+| GET | `/clientes/{id}` | Autenticado | Busca cliente |
+| POST | `/clientes` | Autenticado | Cadastra cliente |
+| PUT | `/clientes/{id}` | Autenticado | Atualiza cliente |
+| DELETE | `/clientes/{id}` | Autenticado | Remove cliente |
+| GET | `/produtos` | Autenticado | Lista produtos |
+| GET | `/produtos/{id}` | Autenticado | Busca produto |
+| POST | `/produtos` | Autenticado | Cadastra produto |
+| PUT | `/produtos/{id}` | Autenticado | Atualiza produto |
+| DELETE | `/produtos/{id}` | Autenticado | Remove produto |
+| POST | `/vendas` | Autenticado | Registra venda |
+| GET | `/vendas/{id}` | Autenticado | Busca venda |
+| GET | `/vendas/cliente/{id}` | Autenticado | Vendas do cliente |
+| GET | `/usuarios` | Autenticado | Lista usuários |
+| POST | `/usuarios` | Autenticado | Cadastra usuário |
+| PUT | `/usuarios/{id}` | Autenticado | Atualiza usuário |
+| DELETE | `/usuarios/{id}` | Autenticado | Remove usuário |
+| GET | `/relatorios/vendas` | Autenticado | Vendas por período |
+| GET | `/relatorios/cliente/{id}` | Autenticado | Histórico do cliente |
+
+## Repositório
+
+[github.com/lucstr-souza/ProjetoSistemaGestaoComercial](https://github.com/lucstr-souza/ProjetoSistemaGestaoComercial)
